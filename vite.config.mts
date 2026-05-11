@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [
     react(),
     Pages({
-      pagesDir: [{ dir: "pages", baseRoute: "" }],
+      dirs: [{ dir: "pages", baseRoute: "" }],
       extensions: ["tsx"],
     }),
   ],

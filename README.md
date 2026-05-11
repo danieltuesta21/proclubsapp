@@ -36,17 +36,17 @@ This is a web application boilerplate that integrates React, Vite, Express, and 
 
 ## Tech stack versions
 
-| Package | Version |
-|---|---|
-| react / react-dom | 19.x |
-| vite | 8.x |
-| express | 5.x |
-| typescript | 5.x |
-| vitest | 4.x |
-| react-router / react-router-dom | 7.x |
-| dotenv | 17.x |
-| esbuild | latest |
-| @vitejs/plugin-react-swc | 4.x |
+| Package                         | Version |
+| ------------------------------- | ------- |
+| react / react-dom               | 19.x    |
+| vite                            | 8.x     |
+| express                         | 5.x     |
+| typescript                      | 5.x     |
+| vitest                          | 4.x     |
+| react-router / react-router-dom | 7.x     |
+| dotenv                          | 17.x    |
+| esbuild                         | latest  |
+| @vitejs/plugin-react-swc        | 4.x     |
 
 ## Installation
 

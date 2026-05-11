@@ -4,16 +4,15 @@
     "target": "es2022",
     "jsx": "preserve",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "sourceMap": true,
     "outDir": "./.local/vite/dist",
     "rootDir": ".",
     "resolveJsonModule": true,
     "preserveConstEnums": true,
     "esModuleInterop": true,
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "allowImportingTsExtensions": true,
     "noEmit": true,
