@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import eslint from "vite-plugin-eslint";
 import Pages from "vite-plugin-pages";
 import path from "path";
 
@@ -10,7 +9,6 @@ export default defineConfig({
   envDir: "../",
   plugins: [
     react(),
-    eslint(),
     Pages({
       pagesDir: [{ dir: "pages", baseRoute: "" }],
       extensions: ["tsx"],
@@ -18,7 +16,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
+      "@": path.resolve(import.meta.dirname, "src"),
     },
   },
   server: {

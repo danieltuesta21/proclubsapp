@@ -6,32 +6,47 @@ This is a web application boilerplate that integrates React, Vite, Express, and 
 
 ## Features
 
-- React for building user interfaces.
-- Vite (with swc) for an ultra-fast frontend development experience.
-  - Includes css modules
-- Vite for front-end builds
-- Express for API endpoints
-- TypeScript for adding type safety to JavaScript.
-- vscode debugging for frontend / backend
-- Esbuild for efficient backend builds.
-- Proxying of api endpoints through Vite environment during development
-- Common typings between frontend and backend
-- esLint with rules from recent projects
-- prettier with the standard rules
-- Jest testing setup with one example test file
+- React 19 for building user interfaces.
+- Vite 8 (with SWC) for an ultra-fast frontend development experience.
+  - Includes CSS modules
+  - Uses rolldown bundler (Vite 8 default)
+- Express 5 for API endpoints
+- TypeScript 5 for type safety
+- ESM-first — `"type": "module"` throughout the project
+- Esbuild for efficient backend builds
+- Vitest for unit testing
 - File-based routing (`/src/pages` for all routes)
 - `/src/public` for static assets
-- Docker deployment working
+- Proxying of API endpoints through Vite during development
+- Common typings between frontend and backend
+- ESLint with rules from recent projects
+- Prettier with standard rules
+- VS Code debugging for frontend / backend
+- Docker deployment
   - Only `prod` setup for now
 
 ### Notes
 
-- Express .env reference is the typical `process.env.VALUE`
-- Client-side (build time by Vite) .env reference is `import.meta.env.VALUE`
+- Express `.env` reference is the typical `process.env.VALUE`
+- Client-side (build time by Vite) `.env` reference is `import.meta.env.VALUE`
 
 ### TODO:
 
 - Did them all!
+
+## Tech stack versions
+
+| Package | Version |
+|---|---|
+| react / react-dom | 19.x |
+| vite | 8.x |
+| express | 5.x |
+| typescript | 5.x |
+| vitest | 4.x |
+| react-router / react-router-dom | 7.x |
+| dotenv | 17.x |
+| esbuild | latest |
+| @vitejs/plugin-react-swc | 4.x |
 
 ## Installation
 
@@ -68,7 +83,7 @@ To build the application for production:
 npm run build
 ```
 
-This script builds both the frontend and backend parts of the application. The result is put in `.local/vite/dist`and `.local/express/dist` respectively.
+This script builds both the frontend and backend parts of the application. The result is put in `.local/vite/dist` and `.local/express/dist` respectively.
 
 ### Start Production Server
 
@@ -79,6 +94,13 @@ npm run start
 ```
 
 This runs a simple `node ./.local/express/dist/api.js` command to start the express server that serves the `/api/v1` endpoints.
+
+### Testing
+
+```bash
+npm run test        # vitest run (single pass)
+npm run test:all    # lint + tsc + build + test
+```
 
 ### Deploy via Docker
 
@@ -98,5 +120,7 @@ This runs a simple `node ./.local/express/dist/api.js` command to start the expr
 
 - `src/`: Contains the source code for the React frontend.
 - `src/server/`: Contains the source code for the Express backend.
+- `vitest.config.ts`: Vitest configuration (replaces jest.config.ts).
+- `esbuild.mjs`: Esbuild script for bundling the Express server.
 - `.local/vite/dist`: Destination for the built frontend files.
 - `.local/express/dist`: Destination for the built backend server files.
