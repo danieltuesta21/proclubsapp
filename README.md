@@ -58,7 +58,6 @@ This is a web application boilerplate that integrates React, Vite, Express, and 
    ```
 
 2. Then create a `.env` file by copying `.env.sample` to `.env`
-3. Run `/scripts/make-dev-ssl-cert.sh` (used for docker deploys only)
 
 ## Usage
 
@@ -105,6 +104,14 @@ npm run test:all        # lint + tsc + build + test
 
 ### Deploy via Docker
 
+Before running Docker locally, create the self-signed development certificate once:
+
+```bash
+bash ./scripts/make-dev-ssl-cert.sh
+```
+
+This mirrors the setup used in the `../coda` codebase: the script writes `nginx.crt` and `nginx.key` into `./.local`, and those files are mounted into the nginx container at `/etc/pki/tls/...` for local HTTPS.
+
 - `npm run docker:preview:rebuild`
   - Builds two docker images:
     - `nginx`
@@ -116,6 +123,7 @@ npm run test:all        # lint + tsc + build + test
       - this file is copied to a node container and run with `node /api.js`
 - `npm run docker:preview` to start the containers
 - Go to `https://localhost` to hit the nginx server
+- Your browser will likely show a self-signed certificate warning the first time; accept it for local development
 
 ## Structure
 
