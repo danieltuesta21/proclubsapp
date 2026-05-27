@@ -13,6 +13,6 @@ build({
   platform: "node",
   target: "node20",
   external: [],
-  outfile: "./.local/express/dist/api.js",
+  outfile: "./.local/express/dist/api.cjs",
   tsconfig: "./tsconfig.json",
 }).catch(() => process.exit(1));
