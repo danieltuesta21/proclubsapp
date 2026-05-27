@@ -50,7 +50,7 @@ export default [
       "package-json/restrict-dependency-ranges": [
         "error",
         {
-          rangeType: "pin",
+          rangeType: "caret",
         },
       ],
     },
