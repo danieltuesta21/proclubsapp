@@ -1,6 +1,6 @@
 import { useState, JSX } from "react";
 import styles from "./index.module.css";
-import { commonExample } from "@/utils/utils.ts";
+import { commonExample } from "utils/utils";
 
 const HomePage = (): JSX.Element => {
   const urlWithProxy = `api/v1/version`;

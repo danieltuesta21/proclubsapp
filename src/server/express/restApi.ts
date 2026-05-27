@@ -10,11 +10,11 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve a successful response. For use with wait-on
-app.get("/api/v1/health", (req, res) => {
+app.get("/api/v1/health", (_req, res) => {
   res.send({ status: "ok" });
 });
 
-app.get(`/api/v1/version`, (req: Request, res: Response) => {
+app.get(`/api/v1/version`, (_req: Request, res: Response) => {
   const respObj: RespExampleType = {
     id: 1,
     version: packageJSON.version,
