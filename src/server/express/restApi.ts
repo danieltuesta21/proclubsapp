@@ -2,6 +2,7 @@ import packageJSON from "../../../package.json";
 import express, { Application } from "express";
 import cors from "cors";
 import { Request, Response } from "express";
+import missionsRouter from "./routes/missions";
 
 const app: Application = express();
 
@@ -22,6 +23,8 @@ app.get(`/api/v1/version`, (_req: Request, res: Response) => {
   };
   res.send(respObj);
 });
+
+app.use("/api/v1/missions", missionsRouter);
 
 app.use(express.static("./.local/vite/dist"));
 

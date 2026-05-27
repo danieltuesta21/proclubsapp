@@ -30,7 +30,7 @@ export const config: UserConfig = {
   server: {
     proxy: {
       "/api/v1": {
-        target: "http://localhost:9001/",
+        target: "http://localhost:9501/",
         changeOrigin: true,
         ws: true,
       },
@@ -39,7 +39,8 @@ export const config: UserConfig = {
       ignored: ["**/node_modules/**", "**/.local/**", "**/public/**", "**/static/**"],
     },
     host: "0.0.0.0",
-    port: 9000,
+    port: 9500,
+    strictPort: true,
   },
 
   build: {

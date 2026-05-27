@@ -72,8 +72,8 @@ npm run dev
 
 This starts the esbuild watch process, which builds the Express server and restarts it automatically on changes. Once the API is healthy, the Vite dev server starts for the frontend.
 
-- Frontend: `http://localhost:9000`
-- Backend API: `http://localhost:9001`
+- Frontend: `http://localhost:9500`
+- Backend API: `http://localhost:9501`
 
 ### Build
 
@@ -93,7 +93,7 @@ After building, start the production server with:
 npm run api:prod
 ```
 
-This runs the Express server that serves `/api/v1` endpoints on port 9001.
+This runs the Express server that serves `/api/v1` endpoints on port 9501.
 
 ### Testing
 
