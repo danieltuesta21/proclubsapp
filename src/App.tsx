@@ -1,9 +1,13 @@
-import { Suspense, JSX } from "react";
-import { useRoutes } from "react-router-dom";
-import routes from "~react-pages";
+import { JSX } from "react";
+import { Routes, Route } from "react-router";
+import Index from "pages/index";
 
 function App(): JSX.Element {
-  return <Suspense fallback={<p>Loading...</p>}>{useRoutes(routes)}</Suspense>;
+  return (
+    <Routes>
+      <Route path="/" element={<Index />} />
+    </Routes>
+  );
 }
 
 export default App;

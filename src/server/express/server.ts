@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
-dotenv.config();
+import "utils/loadEnv";
 import { createServer } from "http";
-import app from "./restApi.ts";
-import { commonExample } from "@/utils/utils.ts";
+import app from "./restApi";
+import { commonExample } from "utils/utils";
 // import { createWebSocketServer } from "path/to/websocket";
 
 commonExample();
@@ -12,7 +11,6 @@ const server = createServer();
 server.on("request", app);
 // createWebSocketServer(server);
 
-// hard-coded port for simplicity until more flexibility needed
-server.listen(9001, () => {
+server.listen(9501, () => {
   console.log(`API v1 (re)started`);
 });

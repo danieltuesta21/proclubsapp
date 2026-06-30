@@ -6,20 +6,21 @@ This is a web application boilerplate that integrates React, Vite, Express, and 
 
 ## Features
 
-- React 19 for building user interfaces.
-- Vite 8 (with SWC) for an ultra-fast frontend development experience.
+- React 19 for building user interfaces
+- Vite 8 for an ultra-fast frontend development experience
   - Includes CSS modules
   - Uses rolldown bundler (Vite 8 default)
 - Express 5 for API endpoints
 - TypeScript 5 for type safety
 - ESM-first — `"type": "module"` throughout the project
-- Esbuild for efficient backend builds
-- Vitest for unit testing
-- File-based routing (`/src/pages` for all routes)
+- Esbuild for efficient backend builds — watch mode with automatic server restart (no nodemon)
+- Vitest for unit testing with junit output
+- Explicit routing via `react-router` (`/src/pages`)
 - `/src/public` for static assets
 - Proxying of API endpoints through Vite during development
 - Common typings between frontend and backend
-- ESLint with rules from recent projects
+- ESLint with rules from recent projects (react-hooks, security rules, pinned deps enforcement)
+- Stylelint for CSS linting
 - Prettier with standard rules
 - VS Code debugging for frontend / backend
 - Docker deployment
@@ -29,24 +30,22 @@ This is a web application boilerplate that integrates React, Vite, Express, and 
 
 - Express `.env` reference is the typical `process.env.VALUE`
 - Client-side (build time by Vite) `.env` reference is `import.meta.env.VALUE`
-
-### TODO:
-
-- Did them all!
+- Build-time constants `__APP_VERSION__` and `__GIT_COMMIT__` are injected by esbuild and Vite
 
 ## Tech stack versions
 
-| Package                         | Version |
-| ------------------------------- | ------- |
-| react / react-dom               | 19.x    |
-| vite                            | 8.x     |
-| express                         | 5.x     |
-| typescript                      | 5.x     |
-| vitest                          | 4.x     |
-| react-router / react-router-dom | 7.x     |
-| dotenv                          | 17.x    |
-| esbuild                         | latest  |
-| @vitejs/plugin-react-swc        | 4.x     |
+| Package              | Version |
+| -------------------- | ------- |
+| react / react-dom    | 19.x    |
+| vite                 | 8.x     |
+| express              | 5.x     |
+| typescript           | 5.x     |
+| vitest               | 4.x     |
+| react-router         | 7.x     |
+| dotenv               | 17.x    |
+| esbuild              | 0.28.x  |
+| @vitejs/plugin-react | 6.x     |
+| stylelint            | 17.x    |
 
 ## Installation
 
@@ -59,7 +58,6 @@ This is a web application boilerplate that integrates React, Vite, Express, and 
    ```
 
 2. Then create a `.env` file by copying `.env.sample` to `.env`
-3. Run `/scripts/make-dev-ssl-cert.sh` (used for docker deploys only)
 
 ## Usage
 
@@ -71,9 +69,10 @@ To start both the frontend and backend in development mode, run:
 npm run dev
 ```
 
-This will start the Vite development server for the frontend and the Express server for the backend concurrently.
+This starts the esbuild watch process, which builds the Express server and restarts it automatically on changes. Once the API is healthy, the Vite dev server starts for the frontend.
 
-Available at `http://localhost:5100`
+- Frontend: `http://localhost:9500`
+- Backend API: `http://localhost:9501`
 
 ### Build
 
@@ -83,26 +82,35 @@ To build the application for production:
 npm run build
 ```
 
-This script builds both the frontend and backend parts of the application. The result is put in `.local/vite/dist` and `.local/express/dist` respectively.
+Builds both frontend and backend. Output goes to `.local/vite/dist` and `.local/express/dist` respectively.
 
 ### Start Production Server
 
 After building, start the production server with:
 
 ```bash
-npm run start
+npm run api:prod
 ```
 
-This runs a simple `node ./.local/express/dist/api.js` command to start the express server that serves the `/api/v1` endpoints.
+This runs the Express server that serves `/api/v1` endpoints on port 9501.
 
 ### Testing
 
 ```bash
-npm run test        # vitest run (single pass)
-npm run test:all    # lint + tsc + build + test
+npm run test            # vitest run (single pass)
+npm run test:coverage   # vitest run with coverage report
+npm run test:all        # lint + tsc + build + test
 ```
 
 ### Deploy via Docker
+
+Before running Docker locally, create the self-signed development certificate once:
+
+```bash
+bash ./scripts/make-dev-ssl-cert.sh
+```
+
+This mirrors the setup used in the `../coda` codebase: the script writes `nginx.crt` and `nginx.key` into `./.local`, and those files are mounted into the nginx container at `/etc/pki/tls/...` for local HTTPS.
 
 - `npm run docker:preview:rebuild`
   - Builds two docker images:
@@ -115,12 +123,18 @@ npm run test:all    # lint + tsc + build + test
       - this file is copied to a node container and run with `node /api.js`
 - `npm run docker:preview` to start the containers
 - Go to `https://localhost` to hit the nginx server
+- Your browser will likely show a self-signed certificate warning the first time; accept it for local development
 
 ## Structure
 
-- `src/`: Contains the source code for the React frontend.
-- `src/server/`: Contains the source code for the Express backend.
-- `vitest.config.ts`: Vitest configuration (replaces jest.config.ts).
-- `esbuild.mjs`: Esbuild script for bundling the Express server.
-- `.local/vite/dist`: Destination for the built frontend files.
-- `.local/express/dist`: Destination for the built backend server files.
+- `src/` — React frontend source
+- `src/server/` — Express backend source
+- `src/pages/` — Route components (add a `<Route>` in `App.tsx` for each)
+- `src/utils/` — Shared utilities (available to both client and server via path alias)
+- `src/typings/` — Global ambient type declarations
+- `src/styles/` — Global CSS
+- `vitest.config.mts` — Vitest configuration (extends `vite.config.mts`)
+- `esbuild.mjs` — Esbuild script for bundling the Express server
+- `stylelint.config.js` — CSS linting configuration
+- `.local/vite/dist` — Built frontend files
+- `.local/express/dist` — Built backend server files
