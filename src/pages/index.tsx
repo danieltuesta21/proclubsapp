@@ -11,7 +11,7 @@ type Filter = (typeof FILTERS)[number];
 type ApiEntry = { endpoint: string; status: number; ms: number };
 
 const HomePage = (): React.ReactElement => {
-  const ProClubsSDK = useSDK();
+  const [sdk] = useState<ProClubsSDK>(() => new ProClubsSDK());
   const [missions, setMissions] = useState<MissionType[]>([]);
   const [versionInfo, setVersionInfo] = useState<RespExampleType | null>(null);
   const [loading, setLoading] = useState(true);

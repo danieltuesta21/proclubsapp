@@ -8,7 +8,6 @@ commonExample();
 const server = createServer();
 
 server.on("request", app);
-
-server.listen(9501, () => {
+server.listen(process.env.SERVER_PORT, () => {
   console.log(`API v1 (re)started`);
 });

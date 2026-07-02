@@ -1,7 +1,6 @@
 type RespExampleType = {
   id: number;
   version: string;
-  envVal: string;
 };
 
 type MissionStatus = "active" | "completed" | "planned";

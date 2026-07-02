@@ -1,11 +1,10 @@
-/**
- * SDK Configuration
- */
-
 import type { SDKConfig } from './types';
 
+const API_BASE_URL = import.meta.env.BASE_URL || 'http://localhost';
+const API_PORT = import.meta.env.SERVER_PORT || 9501;
+
 const DEFAULT_CONFIG: SDKConfig = {
-  baseURL: process.env.VITE_API_BASE_URL || 'http://localhost:3001/api',
+  baseURL: `${API_BASE_URL}:${API_PORT}/api/v1`,
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
