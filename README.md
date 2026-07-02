@@ -1,4 +1,4 @@
-# proclubsapp
+# fullstack-template
 
 ## Description
 
@@ -52,15 +52,15 @@ This is a web application boilerplate that integrates React, Vite, Express, and 
 1. To get started, clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/danieltuesta21/proclubsapp.git
-cd proclubsapp
+git clone https://github.com/danieltuesta21/fullstack-template.git
+cd fullstack-template
 npm install
 ```
 
 If you previously cloned the repository under the old name, update your local git remote URL (replace `<USERNAME>` with your GitHub username):
 
 ```bash
-git remote set-url origin https://github.com/<USERNAME>/proclubsapp.git
+git remote set-url origin https://github.com/<USERNAME>/fullstack-template.git
 ```
 
 2. Then create a `.env` file by copying `.env.sample` to `.env`
