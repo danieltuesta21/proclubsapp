@@ -3,6 +3,7 @@ import styles from "./index.module.css";
 import MissionCard from "components/MissionCard";
 import TechStackModal from "pages/testroute";
 import { getMissionStats } from "utils/utils";
+import { ProClubsSDK, useSDK } from "../sdk";
 
 const FILTERS = ["all", "active", "completed", "planned"] as const;
 type Filter = (typeof FILTERS)[number];
@@ -10,6 +11,7 @@ type Filter = (typeof FILTERS)[number];
 type ApiEntry = { endpoint: string; status: number; ms: number };
 
 const HomePage = (): React.ReactElement => {
+  const ProClubsSDK = useSDK();
   const [missions, setMissions] = useState<MissionType[]>([]);
   const [versionInfo, setVersionInfo] = useState<RespExampleType | null>(null);
   const [loading, setLoading] = useState(true);

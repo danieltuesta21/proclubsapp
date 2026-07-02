@@ -1,0 +1,15 @@
+[
+  {
+    "matchId": "9876543210",
+    "timestamp": 1751500000,
+    "clubs": {
+      "1234567": { "score": "3", "goals": "3", "result": "1" },
+      "7654321": { "score": "1", "goals": "1", "result": "0" }
+    },
+    "players": {
+      "1234567": {
+        "1111": { "playername": "PlayerA", "goals": "2", "assists": "1", "rating": "8.2" }
+      }
+    }
+  }
+]
