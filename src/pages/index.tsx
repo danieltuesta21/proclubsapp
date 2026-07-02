@@ -1,4 +1,4 @@
-import { useState, useEffect, JSX } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./index.module.css";
 import MissionCard from "components/MissionCard";
 import TechStackModal from "pages/testroute";
@@ -9,7 +9,7 @@ type Filter = (typeof FILTERS)[number];
 
 type ApiEntry = { endpoint: string; status: number; ms: number };
 
-const HomePage = (): JSX.Element => {
+const HomePage = (): React.ReactElement => {
   const [missions, setMissions] = useState<MissionType[]>([]);
   const [versionInfo, setVersionInfo] = useState<RespExampleType | null>(null);
   const [loading, setLoading] = useState(true);
