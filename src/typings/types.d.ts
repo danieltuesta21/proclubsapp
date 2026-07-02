@@ -21,3 +21,58 @@ type MissionStats = {
   completed: number;
   planned: number;
 };
+
+type Member = {
+  name: string;
+  proPos: string;
+  gamesPlayed: string;
+  goals: string;
+  assists: string;
+  manOfTheMatch: string;
+  winRate: string;
+  ratingAve: string;
+  passesMade: string;
+  passSuccessRate: string;
+  tacklesMade: string;
+  tackleSuccessRate: string;
+};
+
+type ClubOverallStats = {
+  clubId: string;
+  gamesPlayed: string;
+  wins: string;
+  losses: string;
+  ties: string;
+  goals: string;
+  goalsAgainst: string;
+  skillRating: string;
+  leagueAppearances: string;
+};
+
+type ClubRank = {
+  clubId: string;
+  rank: string;
+  leaguePoints: string;
+};
+
+type Match = {
+  matchId: string;
+  timestamp: number;
+  clubs: {
+    [clubId: string]: {
+      score: string;
+      goals: string;
+      result: string;
+    };
+    players: {
+      [clubId: string]: {
+        [playerId: string]: {
+          playername: string;
+          goals: string;
+          assists: string;
+          rating: string;
+        };
+      };
+    };
+  };
+};
