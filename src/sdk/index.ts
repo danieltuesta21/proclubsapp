@@ -4,25 +4,27 @@
  */
 
 // Main client
-export { ProClubsSDK as default, ProClubsSDK } from './client';
+export { ProClubsSDK as default, ProClubsSDK } from "./client";
 
 // React integration
-export { SDKProvider } from './provider';
-export { useSDK } from './context';
+export { SDKProvider } from "./provider";
+export { useSDK } from "./context";
 
 // Modules
-export { MissionsModule } from './modules/missions';
+export { MissionsModule } from "./modules/missions";
 
 // Types
 export type {
   SDKConfig,
   APIResponse,
   APIError,
+  ClubMember,
+  ClubMemberFilters,
   Mission,
   MissionFilters,
   CreateMissionPayload,
   UpdateMissionPayload,
-} from './types';
+} from "./types";
 
 // Utilities
-export { HTTPClient } from './utils/http';
+export { HTTPClient } from "./utils/http";

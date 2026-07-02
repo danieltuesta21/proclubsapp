@@ -21,7 +21,7 @@ type MissionStats = {
   planned: number;
 };
 
-type Member = {
+type ClubMemberType = {
   name: string;
   proPos: string;
   gamesPlayed: string;

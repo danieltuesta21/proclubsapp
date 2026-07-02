@@ -3,7 +3,7 @@ import styles from "./index.module.css";
 import MissionCard from "components/MissionCard";
 import TechStackModal from "pages/testroute";
 import { getMissionStats } from "utils/utils";
-import { ProClubsSDK, useSDK } from "../sdk";
+import { Mission, ProClubsSDK, useSDK } from "../sdk";
 
 const FILTERS = ["all", "active", "completed", "planned"] as const;
 type Filter = (typeof FILTERS)[number];
@@ -11,8 +11,8 @@ type Filter = (typeof FILTERS)[number];
 type ApiEntry = { endpoint: string; status: number; ms: number };
 
 const HomePage = (): React.ReactElement => {
-  const [sdk] = useState<ProClubsSDK>(() => new ProClubsSDK());
-  const [missions, setMissions] = useState<MissionType[]>([]);
+  const sdk = useSDK() as ProClubsSDK;
+  const [missions, setMissions] = useState<Mission[]>([]);
   const [versionInfo, setVersionInfo] = useState<RespExampleType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,11 +27,12 @@ const HomePage = (): React.ReactElement => {
       const t0 = Date.now();
       try {
         const [missionsRes, versionRes] = await Promise.all([
-          fetch("/api/v1/missions"),
+          sdk.missions.list(),
           fetch("/api/v1/version"),
         ]);
+
         const ms = Date.now() - t0;
-        const missionsData: MissionType[] = await missionsRes.json();
+        const missionsData: Mission[] = missionsRes.data;
         const versionData: RespExampleType = await versionRes.json();
         setMissions(missionsData);
         setVersionInfo(versionData);

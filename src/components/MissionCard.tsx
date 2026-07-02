@@ -2,9 +2,10 @@ import { JSX } from "react";
 import styles from "./MissionCard.module.css";
 import StatusBadge from "components/StatusBadge";
 import { formatDate, formatLaunchAge } from "utils/utils";
+import { Mission } from "../sdk";
 
 type Props = {
-  mission: MissionType;
+  mission: Mission;
 };
 
 const MissionCard = ({ mission }: Props): JSX.Element => {

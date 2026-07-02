@@ -3,14 +3,14 @@
  * API client for mission-related endpoints
  */
 
-import type { HTTPClient } from '../utils/http';
+import type { HTTPClient } from "../utils/http";
 import type {
   Mission,
   MissionFilters,
   CreateMissionPayload,
   UpdateMissionPayload,
   APIResponse,
-} from '../types';
+} from "../types";
 
 export class MissionsModule {
   private http: HTTPClient;
@@ -24,12 +24,12 @@ export class MissionsModule {
    */
   async list(filters?: MissionFilters): Promise<APIResponse<Mission[]>> {
     const searchParams = new URLSearchParams();
-    if (filters?.status) searchParams.append('status', filters.status);
-    if (filters?.limit) searchParams.append('limit', String(filters.limit));
-    if (filters?.offset) searchParams.append('offset', String(filters.offset));
+    if (filters?.status) searchParams.append("status", filters.status);
+    if (filters?.limit) searchParams.append("limit", String(filters.limit));
+    if (filters?.offset) searchParams.append("offset", String(filters.offset));
 
     const query = searchParams.toString();
-    const path = query ? `/missions?${query}` : '/missions';
+    const path = query ? `/missions?${query}` : "/missions";
 
     return this.http.get<Mission[]>(path);
   }
@@ -45,16 +45,13 @@ export class MissionsModule {
    * Create a new mission
    */
   async create(payload: CreateMissionPayload): Promise<APIResponse<Mission>> {
-    return this.http.post<Mission>('/missions', payload);
+    return this.http.post<Mission>("/missions", payload);
   }
 
   /**
    * Update a mission
    */
-  async update(
-    missionId: string,
-    payload: UpdateMissionPayload,
-  ): Promise<APIResponse<Mission>> {
+  async update(missionId: string, payload: UpdateMissionPayload): Promise<APIResponse<Mission>> {
     return this.http.patch<Mission>(`/missions/${missionId}`, payload);
   }
 

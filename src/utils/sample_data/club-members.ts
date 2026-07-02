@@ -1,5 +1,5 @@
-{
-  "members": [
+export const CLUB_MEMBERS: { members: ClubMemberType[] } = {
+  members: [
     {
       "name": "PlayerGamertag",
       "proPos": "midfielder",

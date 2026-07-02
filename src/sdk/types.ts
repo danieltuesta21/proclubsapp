@@ -26,14 +26,14 @@ export interface APIError {
 export interface Mission {
   id: string;
   name: string;
-  description: string;
-  status: 'active' | 'completed' | 'pending';
-  createdAt: string;
-  updatedAt: string;
+  status: MissionStatus;
+  launchDate: string;
+  target: string;
+  description: "active" | "completed" | "planned";
 }
 
 export interface MissionFilters {
-  status?: 'active' | 'completed' | 'pending';
+  status?: "active" | "completed" | "planned";
   limit?: number;
   offset?: number;
 }
@@ -41,11 +41,35 @@ export interface MissionFilters {
 export interface CreateMissionPayload {
   name: string;
   description: string;
-  status: 'active' | 'completed' | 'pending';
+  status: "active" | "completed" | "planned";
 }
 
 export interface UpdateMissionPayload {
   name?: string;
   description?: string;
+  status?: "active" | "completed" | "planned";
+}
+
+/**
+ * Club Member Types
+ */
+export interface ClubMember {
+  name: string;
+  proPos: string;
+  gamesPlayed: string;
+  goals: string;
+  assists: string;
+  manOfTheMatch: string;
+  winRate: string;
+  ratingAve: string;
+  passesMade: string;
+  passSuccessRate: string;
+  tacklesMade: string;
+  tackleSuccessRate: string;
+}
+
+export interface ClubMemberFilters {
   status?: 'active' | 'completed' | 'pending';
+  limit?: number;
+  offset?: number;
 }

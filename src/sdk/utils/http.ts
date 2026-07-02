@@ -3,7 +3,7 @@
  * Handles API requests with error handling and response typing
  */
 
-import type { SDKConfig, APIResponse, APIError } from '../types';
+import type { SDKConfig, APIResponse, APIError } from "../types";
 
 export class HTTPClient {
   private config: SDKConfig;
@@ -15,11 +15,8 @@ export class HTTPClient {
   /**
    * Make a GET request
    */
-  async get<T = unknown>(
-    path: string,
-    options?: RequestInit,
-  ): Promise<APIResponse<T>> {
-    return this.request<T>('GET', path, undefined, options);
+  async get<T = unknown>(path: string, options?: RequestInit): Promise<APIResponse<T>> {
+    return this.request<T>("GET", path, undefined, options);
   }
 
   /**
@@ -28,9 +25,9 @@ export class HTTPClient {
   async post<T = unknown>(
     path: string,
     body?: unknown,
-    options?: RequestInit,
+    options?: RequestInit
   ): Promise<APIResponse<T>> {
-    return this.request<T>('POST', path, body, options);
+    return this.request<T>("POST", path, body, options);
   }
 
   /**
@@ -39,9 +36,9 @@ export class HTTPClient {
   async put<T = unknown>(
     path: string,
     body?: unknown,
-    options?: RequestInit,
+    options?: RequestInit
   ): Promise<APIResponse<T>> {
-    return this.request<T>('PUT', path, body, options);
+    return this.request<T>("PUT", path, body, options);
   }
 
   /**
@@ -50,19 +47,16 @@ export class HTTPClient {
   async patch<T = unknown>(
     path: string,
     body?: unknown,
-    options?: RequestInit,
+    options?: RequestInit
   ): Promise<APIResponse<T>> {
-    return this.request<T>('PATCH', path, body, options);
+    return this.request<T>("PATCH", path, body, options);
   }
 
   /**
    * Make a DELETE request
    */
-  async delete<T = unknown>(
-    path: string,
-    options?: RequestInit,
-  ): Promise<APIResponse<T>> {
-    return this.request<T>('DELETE', path, undefined, options);
+  async delete<T = unknown>(path: string, options?: RequestInit): Promise<APIResponse<T>> {
+    return this.request<T>("DELETE", path, undefined, options);
   }
 
   /**
@@ -72,7 +66,7 @@ export class HTTPClient {
     method: string,
     path: string,
     body?: unknown,
-    options?: RequestInit,
+    options?: RequestInit
   ): Promise<APIResponse<T>> {
     const url = `${this.config.baseURL}${path}`;
 
@@ -91,10 +85,7 @@ export class HTTPClient {
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(
-        () => controller.abort(),
-        this.config.timeout || 30000,
-      );
+      const timeoutId = setTimeout(() => controller.abort(), this.config.timeout || 30000);
 
       const response = await fetch(url, {
         ...requestOptions,
@@ -123,7 +114,7 @@ export class HTTPClient {
       if (error instanceof TypeError) {
         throw {
           status: 0,
-          message: 'Network error',
+          message: "Network error",
         } as APIError;
       }
       throw error;

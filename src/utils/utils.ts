@@ -1,3 +1,5 @@
+import { Mission } from "../sdk";
+
 export function commonExample(): void {
   console.log("common example output");
 }
@@ -15,7 +17,7 @@ export function getMissionsByStatus(missions: MissionType[], status: MissionStat
   return missions.filter((m) => m.status === status);
 }
 
-export function getMissionStats(missions: MissionType[]): MissionStats {
+export function getMissionStats(missions: Mission[]): MissionStats {
   return {
     total: missions.length,
     active: missions.filter((m) => m.status === "active").length,

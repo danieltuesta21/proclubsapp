@@ -7,14 +7,14 @@ Internal API client SDK for the ProClubs application. Provides type-safe access 
 ### Import and Initialize
 
 ```typescript
-import ProClubsSDK from '@/sdk';
+import ProClubsSDK from "@/sdk";
 
 // Initialize with default config
 const sdk = new ProClubsSDK();
 
 // Or with custom config
 const sdk = new ProClubsSDK({
-  baseURL: 'https://api.example.com',
+  baseURL: "https://api.example.com",
   timeout: 60000,
 });
 ```
@@ -30,28 +30,28 @@ console.log(response.data);
 
 // Get with filters
 const response = await sdk.missions.list({
-  status: 'active',
+  status: "active",
   limit: 10,
   offset: 0,
 });
 
 // Get single mission
-const response = await sdk.missions.get('mission-123');
+const response = await sdk.missions.get("mission-123");
 
 // Create mission
 const response = await sdk.missions.create({
-  name: 'New Mission',
-  description: 'Mission description',
-  status: 'active',
+  name: "New Mission",
+  description: "Mission description",
+  status: "active",
 });
 
 // Update mission
-const response = await sdk.missions.update('mission-123', {
-  status: 'completed',
+const response = await sdk.missions.update("mission-123", {
+  status: "completed",
 });
 
 // Delete mission
-const response = await sdk.missions.delete('mission-123');
+const response = await sdk.missions.delete("mission-123");
 ```
 
 ## Configuration
@@ -60,8 +60,8 @@ The SDK can be configured with the following options:
 
 ```typescript
 interface SDKConfig {
-  baseURL: string;           // API base URL
-  timeout?: number;          // Request timeout in ms (default: 30000)
+  baseURL: string; // API base URL
+  timeout?: number; // Request timeout in ms (default: 30000)
   headers?: Record<string, string>; // Custom headers
 }
 ```
@@ -69,6 +69,7 @@ interface SDKConfig {
 ### Environment Variables
 
 The SDK will automatically use:
+
 - `VITE_API_BASE_URL` - Base URL for API requests (default: `http://localhost:3001/api`)
 
 ## Project Structure
@@ -103,7 +104,7 @@ export class PlayersModule {
   constructor(private http: HTTPClient) {}
 
   async list(): Promise<APIResponse<Player[]>> {
-    return this.http.get<Player[]>('/players');
+    return this.http.get<Player[]>("/players");
   }
 }
 ```
@@ -125,7 +126,7 @@ All SDK methods throw `APIError` exceptions. Handle errors appropriately:
 
 ```typescript
 try {
-  const response = await sdk.missions.get('mission-123');
+  const response = await sdk.missions.get("mission-123");
 } catch (error) {
   const apiError = error as APIError;
   console.error(`Error: ${apiError.status} - ${apiError.message}`);
@@ -138,8 +139,8 @@ All SDK methods return an `APIResponse<T>` object:
 
 ```typescript
 interface APIResponse<T> {
-  data: T;              // Response data
-  status: number;       // HTTP status code
-  message?: string;     // Optional message
+  data: T; // Response data
+  status: number; // HTTP status code
+  message?: string; // Optional message
 }
 ```
