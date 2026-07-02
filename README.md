@@ -1,4 +1,4 @@
-# Boilerplate for React / Express app written in TS
+# proclubsapp
 
 ## Description
 
@@ -51,11 +51,17 @@ This is a web application boilerplate that integrates React, Vite, Express, and 
 
 1. To get started, clone the repository and install the dependencies:
 
-   ```bash
-   git clone https://github.com/bfeist/vite-express-ts.git
-   cd vite-express-ts
-   npm install
-   ```
+```bash
+git clone https://github.com/danieltuesta21/proclubsapp.git
+cd proclubsapp
+npm install
+```
+
+If you previously cloned the repository under the old name, update your local git remote URL (replace `<USERNAME>` with your GitHub username):
+
+```bash
+git remote set-url origin https://github.com/<USERNAME>/proclubsapp.git
+```
 
 2. Then create a `.env` file by copying `.env.sample` to `.env`
 
