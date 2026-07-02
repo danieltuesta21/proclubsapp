@@ -32,6 +32,7 @@ for (const key in originalBrowserGlobals) {
 
 export default [
   {
+    endOfLine: "auto",
     ignores: [
       "**/public/**/*",
       ".local/**/*",
