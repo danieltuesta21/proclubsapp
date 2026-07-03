@@ -1,19 +1,23 @@
 import { Router, Request, Response } from "express";
-import { CLUB_OVERALL_STATS } from "utils/sample_data/club-overall-stats";
+import { getClubOverallStats } from "../eaApi";
 
 const router = Router();
 
-router.get("/", (_req: Request, res: Response) => {
-  res.json(CLUB_OVERALL_STATS);
-});
+router.get("/:id", async (req: Request, res: Response) => {
+  const clubId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  try {
+    const stats = await getClubOverallStats(clubId);
+    if (!Array.isArray(stats) || stats.length === 0) {
+      res.status(404).json({ error: "Club not found" });
+      return;
+    }
 
-router.get("/:id", (req: Request, res: Response) => {
-  const club = CLUB_OVERALL_STATS.find((m) => m.clubId === req.params.id);
-  if (!club) {
-    res.status(404).json({ error: "Club not found" });
-    return;
+    res.json(stats[0]);
+  } catch (error) {
+
+    console.error("Failed to fetch club overall stats", error);
+    res.status(500).json({ error: "Failed to fetch club data" });
   }
-  res.json(club);
 });
 
 export default router;

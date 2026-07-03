@@ -1,11 +1,9 @@
-
-
 const BASE_URL = process.env.FC_PROCLUBS_BASE_URL || "https://proclubs.ea.com/api/fc";
 const FC_CLUB_ID = process.env.FC_CLUB_ID || "";
 const FC_CLUB_PLATFORM = process.env.FC_CLUB_PLATFORM || "common-gen5";
 const FC_CLUB_NAME = process.env.FC_CLUB_NAME || "My Club";
 
-function asNumber(v: number) {
+function asNumber(v: unknown): number | null {
   const n = Number(v);
   return isFinite(n) ? n : null;
 }
@@ -22,8 +20,9 @@ async function fetchJson(url: string) {
     headers: {
       accept: "application/json",
       "accept-language": "en-US,en;q=0.9",
-      "sec-ch-ua": "\"Google Chrome\";v=\"141\", \"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"141\"",
-      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+      "sec-ch-ua": '"Google Chrome";v="141", "Not?A_Brand";v="8", "Chromium";v="141"',
+      "user-agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
     },
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -34,10 +33,10 @@ async function fetchJson(url: string) {
 // Ces fonctions traduisent les réponses brutes EA en objets stables.
 // Si EA renomme un champ, ajouter l'alias ici sans toucher au reste du code.
 
-function normalizeClubInfo(raw) {
+function normalizeClubInfo(raw: any) {
   const obj = Array.isArray(raw) ? raw[0] : raw && typeof raw === "object" ? raw : {};
   return {
-    name: firstDefined(obj, ["name", "clubName"]) || process.env.CLUB_NAME || "My Club",
+    name: firstDefined(obj, ["name", "clubName"]) || FC_CLUB_NAME,
     clubId: firstDefined(obj, ["clubId", "id"]) || FC_CLUB_ID,
     regionId: firstDefined(obj, ["regionId"]),
     teamId: firstDefined(obj, ["teamId"]),
@@ -45,7 +44,7 @@ function normalizeClubInfo(raw) {
   };
 }
 
-function normalizePlayers(raw) {
+function normalizePlayers(raw: any) {
   const arr = Array.isArray(raw) ? raw : raw && typeof raw === "object" ? Object.values(raw) : [];
   return arr
     .filter((p) => p && p.name)
@@ -78,7 +77,7 @@ function normalizePlayers(raw) {
     });
 }
 
-function extractCurrentDivision(seasonalRaw) {
+function extractCurrentDivision(seasonalRaw: any) {
   if (!seasonalRaw) return null;
   const DIV_FIELDS = [
     "currentDivision",
@@ -92,14 +91,14 @@ function extractCurrentDivision(seasonalRaw) {
     "promotionDivision",
   ];
 
-  const tryObj = (obj) => {
+  const tryObj = (obj: any) => {
     if (!obj || typeof obj !== "object") return 0;
     const v = asNumber(firstDefined(obj, DIV_FIELDS));
-    if (v > 0 && v <= 5) return v;
+    if (v !== null && v > 0 && v <= 5) return v;
     for (const key of DIV_FIELDS) {
       if (obj[key] !== undefined) {
         const n = asNumber(obj[key]);
-        if (n > 0 && n <= 5) return n;
+        if (n !== null && n > 0 && n <= 5) return n;
       }
     }
     return 0;
@@ -122,10 +121,10 @@ function extractCurrentDivision(seasonalRaw) {
       0
     );
 
-  return div > 0 ? div : null;
+  return typeof div === "number" && div > 0 ? div : null;
 }
 
-function extractClubRecord(raw) {
+function extractClubRecord(raw: any) {
   if (!raw) return null;
   const obj = Array.isArray(raw) ? raw[0] : raw;
   if (!obj || typeof obj !== "object") return null;
@@ -147,10 +146,9 @@ async function getClubMembers() {
     `${BASE_URL}/clubs/members?platform=${encodeURIComponent(FC_CLUB_PLATFORM)}&clubId=${encodeURIComponent(FC_CLUB_ID)}`
   );
 }
-
-async function getClubOverallStats() {
+async function getClubOverallStats(clubId: string): Promise<ClubOverallStats[]> {
   return fetchJson(
-    `${BASE_URL}/clubs/overallStats?platform=${encodeURIComponent(FC_CLUB_PLATFORM)}&clubId=${encodeURIComponent(FC_CLUB_ID)}`
+    `${BASE_URL}/clubs/overallStats?platform=${encodeURIComponent(FC_CLUB_PLATFORM)}&clubIds=${encodeURIComponent(clubId)}`
   );
 }
 
@@ -178,10 +176,9 @@ async function getDivisionFromRankings() {
   return div && div >= 1 && div <= 5 ? div : null;
 }
 
-
 // ── Exports ────────────────────────────────────────────────────────────────
 
-module.exports = {
+export {
   getClubInfo,
   getClubMembers,
   getClubOverallStats,

@@ -27,12 +27,15 @@ const HomePage = (): React.ReactElement => {
   useEffect(() => {
     async function loadData() {
       const t0 = Date.now();
+      const id = import.meta.env.VITE_FC_CLUB_ID || "1234567"; // Default to a sample club ID if not provided
+      console.log(import.meta.env);
+      console.log("Using club ID:", id);
       try {
         const [missionsRes, versionRes, clubMembersRes, clubsRes] = await Promise.all([
           sdk.missions.list(),
           fetch("/api/v1/version"),
           sdk.clubMembers.list(),
-          sdk.clubs.get("1234567"),
+          sdk.clubs.get("4588689"),
         ]);
 
         const ms = Date.now() - t0;
@@ -167,6 +170,10 @@ const HomePage = (): React.ReactElement => {
               <p>Games Played: {homeClub.gamesPlayed}</p>
               <p>Wins: {homeClub.wins}</p>
               <p>Losses: {homeClub.losses}</p>
+              <p>Ties: {homeClub.ties}</p>
+              <p>Goals: {homeClub.goals}</p>
+              <p>Goals Against: {homeClub.goalsAgainst}</p>
+              <p>Skill Rating: {homeClub.skillRating}</p>
             </div>
           )}
 
