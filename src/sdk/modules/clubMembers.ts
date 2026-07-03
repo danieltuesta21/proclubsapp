@@ -18,9 +18,9 @@ export class ClubMembersModule {
    */
   async list(filters?: ClubMemberFilters): Promise<APIResponse<ClubMember[]>> {
     const searchParams = new URLSearchParams();
-    if (filters?.status) searchParams.append("status", filters.status);
-    if (filters?.limit) searchParams.append("limit", String(filters.limit));
-    if (filters?.offset) searchParams.append("offset", String(filters.offset));
+    // if (filters?.status) searchParams.append("status", filters.status);
+    // if (filters?.limit) searchParams.append("limit", String(filters.limit));
+    // if (filters?.offset) searchParams.append("offset", String(filters.offset));
 
     const query = searchParams.toString();
     const path = query ? `/club-members?${query}` : "/club-members";

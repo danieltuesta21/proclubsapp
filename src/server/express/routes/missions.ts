@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { MISSIONS } from "utils/missions-data";
+import { MISSIONS } from "utils/sample_data/missions-data";
 
 const router = Router();
 

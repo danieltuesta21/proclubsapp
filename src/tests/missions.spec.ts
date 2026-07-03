@@ -1,5 +1,5 @@
 import { getMissionsByStatus, getMissionStats } from "utils/utils";
-import { MISSIONS } from "utils/missions-data";
+import { MISSIONS } from "utils/sample_data/missions-data";
 
 describe("MISSIONS data integrity", () => {
   it("has at least one mission", () => {
