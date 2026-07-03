@@ -24,6 +24,7 @@ export type {
   MissionFilters,
   CreateMissionPayload,
   UpdateMissionPayload,
+  Club,
 } from "./types";
 
 // Utilities

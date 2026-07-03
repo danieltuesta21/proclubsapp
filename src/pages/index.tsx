@@ -3,7 +3,7 @@ import styles from "./index.module.css";
 import MissionCard from "components/MissionCard";
 import TechStackModal from "pages/testroute";
 import { getMissionStats } from "utils/utils";
-import { ClubMember, Mission, ProClubsSDK, useSDK } from "../sdk";
+import { Club, ClubMember, Mission, ProClubsSDK, useSDK } from "../sdk";
 
 const FILTERS = ["all", "active", "completed", "planned"] as const;
 type Filter = (typeof FILTERS)[number];
@@ -13,7 +13,8 @@ type ApiEntry = { endpoint: string; status: number; ms: number };
 const HomePage = (): React.ReactElement => {
   const sdk = useSDK() as ProClubsSDK;
   const [missions, setMissions] = useState<Mission[]>([]);
-  const [clubMembers, setClubMembers] = useState<ClubMember []>([]);
+  const [homeClub, setHomeClub] = useState<Club | null>(null);
+  const [clubMembers, setClubMembers] = useState<ClubMember[]>([]);
   const [versionInfo, setVersionInfo] = useState<RespExampleType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,18 +28,20 @@ const HomePage = (): React.ReactElement => {
     async function loadData() {
       const t0 = Date.now();
       try {
-        const [missionsRes, versionRes, clubMembersRes] = await Promise.all([
+        const [missionsRes, versionRes, clubMembersRes, clubsRes] = await Promise.all([
           sdk.missions.list(),
           fetch("/api/v1/version"),
           sdk.clubMembers.list(),
+          sdk.clubs.get("1234567"),
         ]);
-
 
         const ms = Date.now() - t0;
         const clubMembersData: ClubMember[] = clubMembersRes.data;
         const missionsData: Mission[] = missionsRes.data;
         const versionData: RespExampleType = await versionRes.json();
-        
+        const clubData: Club = clubsRes.data;
+
+        setHomeClub(clubData);
         setClubMembers(clubMembersData);
         setMissions(missionsData);
         setVersionInfo(versionData);
@@ -46,11 +49,13 @@ const HomePage = (): React.ReactElement => {
           { endpoint: "/api/v1/missions", status: missionsRes.status, ms },
           { endpoint: "/api/v1/version", status: versionRes.status, ms },
           { endpoint: "/api/v1/club-members", status: clubMembersRes.status, ms },
+          { endpoint: "/api/v1/clubs/:id", status: clubsRes.status, ms },
         ]);
         setRawResponses({
           "/api/v1/missions": JSON.stringify(missionsData, null, 2),
           "/api/v1/version": JSON.stringify(versionData, null, 2),
           "/api/v1/club-members": JSON.stringify(clubMembersData, null, 2),
+          "/api/v1/clubs/:id": JSON.stringify(clubData, null, 2),
         });
       } catch {
         setError("Failed to load mission data. Is the API server running?");
@@ -149,12 +154,21 @@ const HomePage = (): React.ReactElement => {
               </button>
             ))}
           </div>
-          
+
           {clubMembers.map((member) => (
             <div key={member.name} className={styles["club-member"]}>
               {member.name} - {member.proPos}
             </div>
           ))}
+          {homeClub && (
+            <div className={styles["home-club"]}>
+              <h2>Home Club</h2>
+              <p>Club ID: {homeClub.clubId}</p>
+              <p>Games Played: {homeClub.gamesPlayed}</p>
+              <p>Wins: {homeClub.wins}</p>
+              <p>Losses: {homeClub.losses}</p>
+            </div>
+          )}
 
           <div className={styles.grid}>
             {filtered.map((mission) => (

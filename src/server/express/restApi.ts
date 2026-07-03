@@ -4,6 +4,7 @@ import cors from "cors";
 import { Request, Response } from "express";
 import missionsRouter from "./routes/missions";
 import clubMembersRouter from "./routes/clubMembers";
+import clubsRouter from "./routes/clubs";
 
 const app: Application = express();
 
@@ -25,7 +26,8 @@ app.get(`/api/v1/version`, (_req: Request, res: Response) => {
 });
 
 app.use("/api/v1/missions", missionsRouter);
-app.use("/api/v1/club-members", clubMembersRouter );
+app.use("/api/v1/club-members", clubMembersRouter);
+app.use("/api/v1/clubs", clubsRouter);
 
 app.use(express.static("./.local/vite/dist"));
 

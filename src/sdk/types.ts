@@ -51,6 +51,21 @@ export interface UpdateMissionPayload {
 }
 
 /**
+ * Club Types
+ */
+export interface Club {
+  clubId: string;
+  gamesPlayed: string;
+  wins: string;
+  losses: string;
+  ties: string;
+  goals: string;
+  goalsAgainst: string;
+  skillRating: string;
+  leagueAppearances: string;
+}
+
+/**
  * Club Member Types
  */
 export interface ClubMember {

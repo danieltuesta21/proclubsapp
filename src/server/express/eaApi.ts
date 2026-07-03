@@ -38,7 +38,7 @@ function normalizeClubInfo(raw) {
   const obj = Array.isArray(raw) ? raw[0] : raw && typeof raw === "object" ? raw : {};
   return {
     name: firstDefined(obj, ["name", "clubName"]) || process.env.CLUB_NAME || "My Club",
-    clubId: firstDefined(obj, ["clubId", "id"]) || CLUB_ID,
+    clubId: firstDefined(obj, ["clubId", "id"]) || FC_CLUB_ID,
     regionId: firstDefined(obj, ["regionId"]),
     teamId: firstDefined(obj, ["teamId"]),
     customKit: firstDefined(obj, ["customKit"]),

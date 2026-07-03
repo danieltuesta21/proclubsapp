@@ -1,6 +1,6 @@
 /**
  * Club Members Module
- * API client for club club member related endpoints
+ * API client for club member related endpoints
  */
 
 import type { HTTPClient } from "../utils/http";
